@@ -4,7 +4,7 @@
 NAME = Textures Converter
 VERSION = 1.0.0
 AUTHOR = MastaMan
-DEV = Visco CG
+DEV = VISCO
 HELP = 
 
 [INSTALL]
@@ -20,7 +20,13 @@ ICON=#("FileLinkActionItems", 5)
 
 [ABOUT]
 
-This script helps to quickly convert and relink textures in on format.=
+This script helps to quickly convert and relink textures.=
+You no longer needed Photoshop for convert textures.=
+Supported formats:=
+- JPG=
+- PNG=
+- TIFF=
+- BMP=
 
 [TEST]
 
@@ -81,10 +87,8 @@ fn useSettings k p w =
 	)
 )
 
-global outputPath = ""
-
 rollout  _rTexturesConverter "Settings" 
-(
+(	
 	group "Settings"
 	(
 		label lblFormat "Format:" across: 2 align: #left		
@@ -132,7 +136,7 @@ rollout  _rTexturesConverter "Settings"
 			n = getFilenameFile b.filename
 			ext = toLower ddlFormat.selected
 			
-			f = outputPath + n + "." + ext
+			f = edtOutput.text + @"\" + n + "." + ext
 						
 			btm = b.bitmap
 			btm.filename = f
@@ -145,19 +149,17 @@ rollout  _rTexturesConverter "Settings"
 		
 		m = "Converted: " + iCountOk as string + "\nNot converted: " + iCountError as string
 		messageBox m title: "Statistic!" beep: false
-		shellLaunch outputPath ""
+		shellLaunch (edtOutput.text) ""
 		
 		
 	)
 	
 	on btnBrowse pressed do
 	(
-		p = getSavePath initialDir: outputPath
+		p = getSavePath initialDir: (edtOutput.text)
 		
 		if(p != undefined) do
-		(
-			p = p + @"\"
-			
+		(			
 			edtOutput.text = p
 			useSettings "PATH" p "w"
 			
@@ -167,8 +169,7 @@ rollout  _rTexturesConverter "Settings"
 	
 	on _rTexturesConverter open do
 	(
-		outputPath = useSettings "PATH" "string" "r"	
-		edtOutput.text = outputPath
+		edtOutput.text = useSettings "PATH" "string" "r"	
 		
 		f = useSettings "FORMAT" "int" "r"
 		if(f != 0) do ddlFormat.selection = f
@@ -179,7 +180,7 @@ rollout  _rTexturesConverter "Settings"
 		g = useSettings "GAMMA" "float" "r"
 		if(g != 0) do spnGamma.value = g
 		
-		if(outputPath.count > 2) do btnConvert.enabled = true
+		if(edtOutput.text.count > 2) do btnConvert.enabled = true
 	)
 	
 	on ddlFormat selected v do
