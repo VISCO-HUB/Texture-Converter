@@ -1,7 +1,7 @@
 /*  
 [INFO] 
 
-NAME = Textures Converter
+NAME = Textures Format Converter
 VERSION = 1.0.0
 AUTHOR = MastaMan
 DEV = VISCO
@@ -9,9 +9,9 @@ HELP =
 
 [INSTALL]
 
-MACRO=TexturesConverter
+MACRO=TexturesFormatConverter
 CAT=VISCO
-TEXT=Textures Converter
+TEXT=Textures Format Converter
 ICON=#("FileLinkActionItems", 5)
 
 [1.0.0]
@@ -225,7 +225,7 @@ rollout _rAbout "About"
 )
 
 try(closeRolloutFloater rTexturesConverter) catch()
-global rTexturesConverter = newRolloutFloater "Detach Element" 250 320
+global rTexturesConverter = newRolloutFloater "Textures Format Converter" 250 320
 
 addRollout _rTexturesConverter rTexturesConverter rolledUp:false 
 addRollout _rAbout rTexturesConverter rolledUp:true 
