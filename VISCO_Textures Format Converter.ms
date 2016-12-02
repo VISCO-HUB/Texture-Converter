@@ -2,7 +2,7 @@
 [INFO] 
 
 NAME = Textures Format Converter
-VERSION = 1.0.0
+VERSION = 1.0.1
 AUTHOR = MastaMan
 DEV = VISCO
 HELP = 
@@ -27,6 +27,10 @@ Supported formats:=
 - PNG=
 - TIFF=
 - BMP=
+- DDS=
+
+[1.0.1]
++ Added: DDS format=
 
 [TEST]
 
@@ -92,7 +96,7 @@ rollout  _rTexturesConverter "Settings"
 	group "Settings"
 	(
 		label lblFormat "Format:" across: 2 align: #left		
-		dropdownlist ddlFormat "" items: #("JPG", "PNG", "TIFF", "BMP") width: 50 align: #left offset: [-50, -3]	
+		dropdownlist ddlFormat "" items: #("JPG", "PNG", "TIFF", "BMP", "DDS") width: 50 align: #left offset: [-50, -3]	
 		spinner spnGamma "Gamma:" range:[1.0,  10.0, 1.0] type: #float align: #left fieldWidth: 35 offset: [0, 4]	
 		checkbox cbxRelink "Relink all textures" checked: true tooltip: "Change all paths for textures to selected in New Path For Textures" offset: [0, 4]
 	)	
@@ -134,6 +138,7 @@ rollout  _rTexturesConverter "Settings"
 			
 			p = getFilenamePath b.filename
 			n = getFilenameFile b.filename
+			cext = getFilenameType b.filename
 			ext = toLower ddlFormat.selected
 			
 			f = edtOutput.text + @"\" + n + "." + ext
