@@ -93,6 +93,10 @@ fn useSettings k p w =
 
 rollout  _rTexturesConverter "Settings" 
 (	
+	group "Convert" 
+	(
+		radiobuttons  rdoConvert "" labels: #("All", "Selected") columns: 1 align: #left
+	)
 	group "Settings"
 	(
 		label lblFormat "Format:" across: 2 align: #left		
@@ -107,6 +111,30 @@ rollout  _rTexturesConverter "Settings"
 	)
 	
 	button btnConvert "Convert" width: 220 height: 35 offset: [0, 10] enabled: false
+	timer tmrConvert "" active: false interval: 100
+	
+	fn getBitmapTex = 
+	(
+		s = rdoConvert.state
+		
+		a = #()
+		case s of
+		(
+			2: (
+				for i in selection do  
+				(
+					b = getClassInstances bitmaptex target: i
+					join a b
+				)	
+			)
+			default:
+			(
+				a = getClassInstances BitmapTex 
+			)
+		)
+		
+		return a
+	)
 	
 	fn ConvertTextures =
 	(
@@ -117,8 +145,8 @@ rollout  _rTexturesConverter "Settings"
 		iCountError = 0
 		iCountOk = 0
 		
-		classBitmapTex = getClassInstances BitmapTex 
-		
+		classBitmapTex = getBitmapTex()
+				
 		for b in classBitmapTex do
 		(
 			progressUpdate (100.0 * iCount / classBitmapTex.count)
@@ -200,13 +228,19 @@ rollout  _rTexturesConverter "Settings"
 	
 	on btnConvert pressed do
 	(
-		ConvertTextures()
+		tmrConvert.active = true
 	)
 	
 	on spnGamma changed v do
 	(
 		useSettings "GAMMA" v "w"
 	)
+	
+	on tmrConvert tick do
+	(
+		ConvertTextures()
+		tmrConvert.active = false
+	)		
 )
 
 
@@ -230,7 +264,7 @@ rollout _rAbout "About"
 )
 
 try(closeRolloutFloater rTexturesConverter) catch()
-global rTexturesConverter = newRolloutFloater "Textures Format Converter" 250 320
+global rTexturesConverter = newRolloutFloater "Textures Format Converter" 250 360
 
 addRollout _rTexturesConverter rTexturesConverter rolledUp:false 
 addRollout _rAbout rTexturesConverter rolledUp:true 
