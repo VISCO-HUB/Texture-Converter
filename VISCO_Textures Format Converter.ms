@@ -2,7 +2,7 @@
 [INFO] 
 
 NAME = Textures Format Converter
-VERSION = 1.0.1
+VERSION = 1.0.2
 AUTHOR = MastaMan
 DEV = VISCO
 HELP = 
@@ -18,6 +18,12 @@ ICON=#("FileLinkActionItems", 5)
 
 * First release =
 
+[1.0.1]
++ Added: DDS format=
+
+[1.0.2]
++ Added: TGA format=
+
 [ABOUT]
 
 This script helps to quickly convert and relink textures.=
@@ -29,8 +35,6 @@ Supported formats:=
 - BMP=
 - DDS=
 
-[1.0.1]
-+ Added: DDS format=
 
 [TEST]
 
@@ -100,7 +104,7 @@ rollout  _rTexturesConverter "Settings"
 	group "Settings"
 	(
 		label lblFormat "Format:" across: 2 align: #left		
-		dropdownlist ddlFormat "" items: #("JPG", "PNG", "TIFF", "BMP", "DDS") width: 50 align: #left offset: [-50, -3]	
+		dropdownlist ddlFormat "" items: #("JPG", "PNG", "TIFF", "BMP", "DDS", "TGA") width: 50 align: #left offset: [-50, -3]	
 		spinner spnGamma "Gamma:" range:[1.0,  10.0, 1.0] type: #float align: #left fieldWidth: 35 offset: [0, 4]	
 		checkbox cbxRelink "Relink all textures" checked: true tooltip: "Change all paths for textures to selected in New Path For Textures" offset: [0, 4]
 	)	
